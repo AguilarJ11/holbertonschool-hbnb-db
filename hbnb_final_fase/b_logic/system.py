@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
 from flask import jsonify
-from models.reviews import Reviews
-from models.users import Users
-from models.place import Place
-from models.amenities import Amenities
-from models.city import City
-from p_layer import D_manager
+from hbnb_final_fase.models.reviews import Reviews
+from hbnb_final_fase.models.users import Users
+from hbnb_final_fase.models.place import Place
+from hbnb_final_fase.models.amenities import Amenities
+from hbnb_final_fase.models.city import City
+from hbnb_final_fase.p_layer import D_manager
 
 
 class System:

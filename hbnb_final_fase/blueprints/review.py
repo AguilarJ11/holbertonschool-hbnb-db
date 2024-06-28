@@ -2,8 +2,8 @@
 
 
 from flask import Blueprint, request, jsonify
-from b_logic.system import System
-from p_layer.DataManager import DataManager
+from hbnb_final_fase.b_logic.system import System
+from hbnb_final_fase.p_layer.dataManager import DataManager
 
 review_bp = Blueprint('review', __name__)
 D_manager = DataManager()

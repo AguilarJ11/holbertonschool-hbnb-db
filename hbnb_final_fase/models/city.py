@@ -1,17 +1,16 @@
 #!/usr/bin/python3
 
-from models.basic_data import Basic_data
-from Run import db
-# Falta agregar la creacion de tablas
-class City(db.Model):
+from hbnb_final_fase.models.basic_data import Basic_data
+from hbnb_final_fase import db
+
+
+class City(db.Model, Basic_data):
     __tablename__ = 'cities'
 
-    id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    country_code = db.Column(db.String(10), db.ForeignKey('countries.code'), nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    updated_at = db.Column(db.DateTime, onupdate=db.func.current_timestamp())
+    country_code = db.Column(db.String(2), db.ForeignKey('countries.code'), nullable=False)
 
     def __init__(self, name, country_code):
+        super().__init__()
         self.name = name
         self.country_code = country_code

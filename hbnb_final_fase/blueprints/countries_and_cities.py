@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from flask import Blueprint, request, jsonify
-from b_logic.system import System
+from hbnb_final_fase.b_logic.system import System
 country_bp = Blueprint('country', __name__)
 
 
