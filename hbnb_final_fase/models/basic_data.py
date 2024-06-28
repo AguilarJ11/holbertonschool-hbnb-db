@@ -3,7 +3,6 @@
 from abc import ABC
 import uuid
 from datetime import datetime
-from app import db
 
 class Basic_data(ABC):
     def __init__(self):
