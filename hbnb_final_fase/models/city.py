@@ -2,7 +2,7 @@
 
 from models.basic_data import Basic_data
 from Run import db
-
+# Falta agregar la creacion de tablas
 class City(db.Model):
     __tablename__ = 'cities'
 

@@ -2,7 +2,7 @@
 
 from models.basic_data import Basic_data
 from Run import db
-
+# Falta agregar la creacion de tablas
 class Reviews(db.Model):# Si es multimple herencia no duplicamos codigo
     __tablename__ = 'reviews' 
 

@@ -2,7 +2,7 @@
 
 from models.basic_data import Basic_data
 from Run import db
-
+# Falta agregar la creacion de tablas
 class User(db.Model):# Si es multimple herencia no duplicamos codigo
     __tablename__ = 'users'
     
@@ -14,7 +14,6 @@ class User(db.Model):# Si es multimple herencia no duplicamos codigo
     updated_at = db.Column(db.DateTime, onupdate=db.func.current_timestamp())
 
     def __init__(self, email, first_name, last_name):
-        super().__init__()
         self.email = email
         self.first_name = first_name
         self.last_name = last_name

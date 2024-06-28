@@ -2,7 +2,7 @@
 
 from models.basic_data import Basic_data
 from Run import db
-
+# Falta agregar la creacion de tablas
 class Place(db.Model): # Si es multiple heredable usamos basic data sino no
     __tablename__ = 'places'
 

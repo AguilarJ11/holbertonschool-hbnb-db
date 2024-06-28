@@ -3,7 +3,7 @@
 from models.basic_data import Basic_data
 import uuid
 from Run import db
-
+# Falta agregar la creacion de tablas
 class Amenities(db.Model):
     __tablename__ = 'amenities'
 

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 from Run import db
-
+# Falta agregar la creacion de tablas
 class Country(db.Model):
     __tablename__ = 'countries'
 
