@@ -1,9 +1,19 @@
 POST USER ✅
 -----------
-curl -X POST http://localhost:4000/users \
+curl -X POST http://localhost:5000/users \
 -H "Content-Type: application/json" \
 -d '{
-  "email": "NEKasdsdaA@example.com",
+  "email": "NasdA@example.com",
+  "password": "21321",
+  "first_name": "Ignacio",
+  "last_name": "Necasek"
+}'
+
+curl -X POST http://localhost:5000/users \
+-H "Content-Type: application/json" \
+-d '{
+  "email": "NasdA@example.com",
+  "password": "123123",
   "first_name": "Ignacio",
   "last_name": "Necasek"
 }'

@@ -2,8 +2,9 @@
 
 
 from flask import Blueprint, request, jsonify
-from b_logic.system import System
-from p_layer.DataManager import DataManager
+from hbnb_final_fase.b_logic.system import System
+from hbnb_final_fase.p_layer.dataManager import DataManager
+from hbnb_final_fase.models.reviews import Reviews
 
 review_bp = Blueprint('review', __name__)
 D_manager = DataManager()
@@ -28,7 +29,7 @@ def create_place_review(place_id):
 @review_bp.route('/users/<user_id>/reviews', methods=['GET'])
 def get_user_review(user_id):
         try:
-            all_reviews = System.get_all('Reviews')
+            all_reviews = System.get_all(Reviews)
             reviews = []
             for review in all_reviews:
                 if review['user_id'] == user_id:
@@ -40,7 +41,7 @@ def get_user_review(user_id):
 @review_bp.route('/place/<place_id>/reviews', methods=['GET'])
 def get_place_review(place_id):
     try:
-        all_reviews = System.get_all('Reviews')
+        all_reviews = System.get_all(Reviews)
         reviews = []
         for review in all_reviews:
             if review['place_id'] == place_id:
@@ -52,7 +53,7 @@ def get_place_review(place_id):
 @review_bp.route('/review/<review_id>', methods=['GET'])
 def get_review(review_id):
     try:
-        all_reviews = System.get_all('Reviews')
+        all_reviews = System.get_all(Reviews)
         reviews = []
         for review in all_reviews:
             if review['id'] == review_id:
@@ -65,7 +66,7 @@ def get_review(review_id):
 def update_review(review_id):
     data = request.get_json()
     try:
-        review = System.update(review_id, data, 'Reviews')
+        review = System.update(review_id, data, Reviews)
         return jsonify(review), 200
     except:
         return jsonify({"Message": "Review not found"}), 404
@@ -73,10 +74,10 @@ def update_review(review_id):
 @review_bp.route('/review/<review_id>', methods=['DELETE'])
 def delete_review(review_id):
     try:
-        review = System.get(review_id, 'Reviews')
+        review = System.get(review_id, Reviews)
         if review == None:
             return jsonify({"Message":"Review not found."}), 404
-        System.delete(review_id, 'Reviews')
+        System.delete(review_id, Reviews)
         return jsonify({"Message":"Successfully review deleted."}), 204
     except:
         return jsonify({"Message":"Review not found."}), 404

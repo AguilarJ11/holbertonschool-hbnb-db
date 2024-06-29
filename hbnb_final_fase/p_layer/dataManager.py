@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from flask import jsonify
-from models.IPersistenceManager import IPersistenceManager
+from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
 import json
 
@@ -25,7 +25,7 @@ class DataManager(IPersistenceManager):
     def save(self, entity):
         class_name = entity.__class__.__name__ 
         if class_name in self.data_lists:
-            self.data_lists[class_name].append(entity.__dict__)
+            self.data_lists[class_name].append(entity.to_dict())
         try:
             with open('data_base.json', 'w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists, indent=4))
@@ -33,7 +33,6 @@ class DataManager(IPersistenceManager):
             return jsonify("File not found"), 404
    
     def get(self, entity_id, entity_type):
-        print(entity_type)
         if type(entity_type) is not str:
             class_name = entity_type.__class__.__name__
         else:
@@ -70,8 +69,12 @@ class DataManager(IPersistenceManager):
                 return jsonify("File not found"), 404
 
     def update(self, entity_id, entity, entity_type):
-        if entity_type in self.data_lists:
-            entity_list = self.data_lists[entity_type]
+        if type(entity_type) is not str:
+            class_name = entity_type.__class__.__name__
+        else:
+            class_name = entity_type
+        if class_name in self.data_lists:
+            entity_list = self.data_lists[class_name]
             for item in entity_list:
                 if entity_id == item.get('id'):
                     item['updated_at'] = datetime.now().isoformat()

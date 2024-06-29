@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 
 from flask import Blueprint, request, jsonify
-from models.users import Users
-from b_logic.system import System
-
+from hbnb_final_fase.b_logic.system import System
+from hbnb_final_fase.models.users import Users
 
 user_bp = Blueprint('user', __name__)
 
@@ -27,7 +26,7 @@ def create_user():
 @user_bp.route('/users', methods=['GET'])
 def get_users():
     try:
-        users = System.get_all('Users')
+        users = System.get_all(Users)
         return jsonify(users), 200
     except:
         return jsonify({"Message":"User not found."}), 404
@@ -35,7 +34,7 @@ def get_users():
 @user_bp.route('/users/<user_id>', methods=['GET'])
 def get_user(user_id):
     try:
-        user = System.get(user_id, 'Users')
+        user = System.get(user_id, Users)
         return jsonify(user), 200
     except:
         return jsonify({"Message":"User not found."}), 404
@@ -44,7 +43,7 @@ def get_user(user_id):
 def update_user(user_id):
     data = request.get_json()
     try:
-        updated = System.update(user_id, data, 'Users')
+        updated = System.update(user_id, data, Users)
         return jsonify(updated), 200
     except:
         return jsonify({"Message": "User not found"}), 404
@@ -52,10 +51,10 @@ def update_user(user_id):
 @user_bp.route('/users/<user_id>', methods=['DELETE'])
 def delete_user(user_id):
     try:
-        user = System.get(user_id, 'Users')
+        user = System.get(user_id, Users)
         if user == None:
             return jsonify({"Message":"User not found."}), 404
-        System.delete(user_id, 'Users')
+        System.delete(user_id, Users)
         return jsonify({"Message":"Successfully user deleted."}), 204
     except:
         return jsonify({"Message":"User not found."}), 404
