@@ -17,7 +17,7 @@ class Db_manager(IPersistenceManager):
         pool_pre_ping=True)
         
         """
-        crea todaslas tablas de los modelo que fueron creados
+        Crea todas las tablas de los modelo que fueron creados
         a partir del objeto db.
         Crea una session para hacer las consultas
         """

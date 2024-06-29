@@ -7,6 +7,11 @@ db = SQLAlchemy()
 
 
 def create_app():
+    
+    """
+    Crea la app de flask, registra rutas y
+    configura para conectarse a la db
+    """
     app = Flask(__name__)
     register_routes(app)
     db_config(app)
@@ -33,6 +38,10 @@ def register_routes(app):
 
 
 def db_config(app):
+    
+    """
+    inicializa la coneccion con sqlite
+    """
     
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///development.db'
 

@@ -36,8 +36,7 @@ class System:
                 raise ValueError("Place not found!")
 
         D_manager.save(new_review)
-        return new_review.__dict__
-
+        return new_review.to_dict()
     def create_place(data_place):
         try:
             new_place = Place(
@@ -57,7 +56,7 @@ class System:
             return jsonify({"Message":"Failed to create Place."}), 400
         
         D_manager.save(new_place)
-        return new_place.__dict__
+        return new_place.to_dict()
 
     def create_amenities(data_amenities):
         try:
@@ -72,6 +71,7 @@ class System:
         try:
             new_user = Users(
                 email = data_user.get('email'),
+                password = data_user.get('password'),
                 first_name = data_user.get('first_name'),
                 last_name = data_user.get('last_name')
             )
@@ -81,9 +81,8 @@ class System:
         for user in existing_users:
             if user.get('email') == data_user.get('email'):
                 raise ValueError("Email already exist!")
-            
         D_manager.save(new_user)
-        return new_user.__dict__
+        return new_user.to_dict()
 
     def create_city(data_city):
         try:
@@ -102,7 +101,7 @@ class System:
         if not country_found:
             raise ValueError("Country not exist!")
         D_manager.save(new_city)
-        return new_city.__dict__
+        return new_city.to_dict()
 
     def update(entity_id, entity, entity_type):
        return D_manager.update(entity_id, entity, entity_type)

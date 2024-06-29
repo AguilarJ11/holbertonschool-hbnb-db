@@ -2,6 +2,8 @@
 
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
+from hbnb_final_fase.models.city import City
+
 country_bp = Blueprint('country', __name__)
 
 
@@ -26,11 +28,16 @@ def get_country(country_code):
 @country_bp.route('/countries/<ountry_code>/cities', methods=['GET'])
 def get_country_cities(country_code):
     try:
-        cities = System.get_all('City')
+        cities = System.get_all(City)
         city_list = []
         for city in cities:
-            if city.get("country_code") == country_code:
-                city_list.append(city)
+            if isinstance(city, dict):
+                if city.get("country_code") == country_code:
+                    city_list.append(city)
+            else:
+                if city.country_code == country_code:
+                    city_list.append(city)
+
         if not city_list:
             raise ValueError(f"There are no citys from {country_code} country")
         return jsonify({"Message":"Successfully retrieved all citys","Contry":country_code, "Citys":city_list}), 200
@@ -53,7 +60,7 @@ def create_city():
 @country_bp.route('/cities', methods=['GET'])
 def get_cities():
     try:
-        cities = System.get_all('City')
+        cities = System.get_all(City)
         return jsonify(cities), 200
     except:
         return jsonify({"Message":"Citys not found."}), 404
@@ -63,7 +70,7 @@ def get_city(city_id):
     if not city_id:
         raise ValueError("Id not valid!")
     try:
-        city = System.get(city_id, 'City')
+        city = System.get(city_id, City)
         return jsonify(city), 200
     except:
         return jsonify({"Message":"City not found."}), 404
@@ -78,7 +85,7 @@ def update_city(city_id):
     if not city_id:
         raise ValueError("Id not valid!")
     try:
-        city = System.update(city_id, data, 'City')
+        city = System.update(city_id, data, City)
         return jsonify(city), 200
     except:
         return jsonify({"Message": "City not found"}), 404
@@ -88,10 +95,10 @@ def delete_city(city_id):
     if not city_id:
         raise ValueError("Id not valid!")
     try:
-        city = System.get(city_id, 'City')
+        city = System.get(city_id, City)
         if city == None:
             return jsonify({"Message":"City not found."}), 404
-        System.delete(city_id, 'Users')
+        System.delete(city_id, City)
         return jsonify({"Message":"Successfully City deleted."}), 204
     except:
         return jsonify({"Message":"City not found."}), 404

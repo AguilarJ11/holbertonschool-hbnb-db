@@ -2,20 +2,23 @@
 
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
+from hbnb_final_fase.models.amenities import Amenities
+from hbnb_final_fase.models.place import Place
 
 place_bp = Blueprint('place', __name__)
 
 @place_bp.route('/places', methods=['POST'])
 def create_place():
     data = request.get_json()
-    amenities = System.get_all('Amenities')
+    amenities = System.get_all(Amenities)
     
     for amenity_id in data.get('amenity_ids', []):
         amenity_found = False
         for amenity in amenities:
-            if amenity.get("id") == amenity_id:
-                amenity_found = True
-                break
+            if isinstance(amenity, dict):
+                if amenity.get("id") == amenity_id:
+                    amenity_found = True
+                    break
         if not amenity_found:
             raise ValueError("Amenity not found!")
     if data.get('description') == "":
@@ -42,7 +45,7 @@ def create_place():
 @place_bp.route('/places', methods=['GET'])
 def get_places():
     try:
-        place = System.get_all('Place')
+        place = System.get_all(Place)
         return jsonify(place), 200
     except:
         return jsonify({"Message":"Places not found."}), 404
@@ -50,7 +53,7 @@ def get_places():
 @place_bp.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
     try:
-        place = System.get(place_id, 'Place')
+        place = System.get(place_id, Place)
         return jsonify(place), 200
     except:
         return jsonify({"Message":"Place not found."}), 404
@@ -59,7 +62,7 @@ def get_place(place_id):
 def update_place(place_id):
     data = request.get_json()
     try:
-        u_place = System.update(place_id, data, 'Place')
+        u_place = System.update(place_id, data, Place)
         return jsonify(u_place), 200
     except:
         return jsonify({"Message": "Place not found"}), 404
@@ -67,7 +70,7 @@ def update_place(place_id):
 @place_bp.route('/places/<place_id>', methods=['DELETE'])
 def delete_place(place_id):
     try:
-        place = System.get(place_id, 'Place')
+        place = System.get(place_id, Place)
         if place == None:
             return jsonify({"Message":"Place not found."}), 404
         System.delete(place_id, 'Place')

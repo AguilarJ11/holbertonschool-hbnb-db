@@ -4,7 +4,7 @@ from hbnb_final_fase.models.basic_data import Basic_data
 from hbnb_final_fase import db
 
 
-class Reviews(db.Model, Basic_data):
+class Reviews(Basic_data, db.Model):
     __tablename__ = 'reviews' 
 
     id = db.Column(db.String(36), primary_key=True)
@@ -21,3 +21,13 @@ class Reviews(db.Model, Basic_data):
         self.user_id = user_id
         self.place_id = place_id
         self.comment = comment
+        
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "email": self.email,
+            "first_name": self.first_name,
+            "last_name": self.last_name,
+            "created_at": self.created_at.isoformat(),
+            "updated_at": self.updated_at.isoformat(),
+        }

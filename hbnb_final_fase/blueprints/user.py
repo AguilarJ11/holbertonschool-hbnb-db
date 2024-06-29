@@ -54,7 +54,7 @@ def delete_user(user_id):
         user = System.get(user_id, Users)
         if user == None:
             return jsonify({"Message":"User not found."}), 404
-        System.delete(user_id, 'Users')
+        System.delete(user_id, Users)
         return jsonify({"Message":"Successfully user deleted."}), 204
     except:
         return jsonify({"Message":"User not found."}), 404

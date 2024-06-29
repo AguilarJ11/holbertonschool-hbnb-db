@@ -1,12 +1,13 @@
 {
     "Users": [
         {
-            "id": "5dc28bbd-d1ed-4e97-8d30-c6c09e01157d",
-            "created_at": "2024-06-18T15:44:34.848746",
-            "updated_at": "2024-06-18T15:44:34.848763",
-            "email": "NEKasdsdaA@example.com",
+            "id": "247a1b5b-2890-43f0-ac13-1ce72e350a8f",
+            "email": "NasdA@example.com",
+            "password": "21321",
             "first_name": "Ignacio",
-            "last_name": "Necasek"
+            "last_name": "Necasek",
+            "created_at": "2024-06-29T16:49:22.431886",
+            "updated_at": "2024-06-29T16:49:22.431892"
         }
     ],
     "Reviews": [],

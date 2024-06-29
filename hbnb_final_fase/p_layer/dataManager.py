@@ -25,7 +25,7 @@ class DataManager(IPersistenceManager):
     def save(self, entity):
         class_name = entity.__class__.__name__ 
         if class_name in self.data_lists:
-            self.data_lists[class_name].append(entity.__dict__)
+            self.data_lists[class_name].append(entity.to_dict())
         try:
             with open('data_base.json', 'w', encoding="utf-8") as file:
                 file.write(json.dumps(self.data_lists, indent=4))
