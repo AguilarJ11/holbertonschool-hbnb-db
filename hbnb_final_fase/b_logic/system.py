@@ -24,13 +24,13 @@ class System:
         place = D_manager.get(place_id, Place)
         if place and place.get('host_id') == new_review.user_id:
             raise ValueError("User cannot review their own place")
-        existing_review = D_manager.get_all(new_review)
+        existing_review = D_manager.get_all(new_review.__class__)
         for review in existing_review:
             if not new_review.user_id in review.get('user_id'):
                 raise ValueError("User not found!")
             if new_review.user_id in review.get('id') and place_id in review.get('place_id'):
                 raise ValueError("User cannot review multiple times on the same place")
-        existing_place = D_manager.get_all('Place')
+        existing_place = D_manager.get_all(Place)
         for place in existing_place:
             if not new_review.place_id in place.get('id'):
                 raise ValueError("Place not found!")
