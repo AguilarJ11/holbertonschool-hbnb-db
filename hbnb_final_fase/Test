@@ -20,11 +20,11 @@ curl -X POST http://localhost:5000/users \
 
 GET ALL USERS ✅
 -------------
-curl -X GET http://localhost:4000/users
+curl -X GET http://localhost:5000/users
 
 GET ID USER ✅
 -------------
-curl -X GET http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f
+curl -X GET http://localhost:5000/users/ec268b0b-83f4-4672-aa6a-3f611fa8f3fd
 
 
 ACTUALIZAR USER POR ID ✅

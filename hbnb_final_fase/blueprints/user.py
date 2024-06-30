@@ -21,7 +21,6 @@ def create_user():
         return jsonify(user), 201
     except Exception as e:
         return jsonify({"message":"Failed to create User.", "error": str(e)}), 400
-    
 
 @user_bp.route('/users', methods=['GET'])
 def get_users():

@@ -25,9 +25,10 @@ class Reviews(Basic_data, db.Model):
     def to_dict(self):
         return {
             "id": self.id,
-            "email": self.email,
-            "first_name": self.first_name,
-            "last_name": self.last_name,
+            "rating": self.rating,
+            "user_id": self.user_id,
+            "place_id": self.place_id,
+            "comment": self.comment,
             "created_at": self.created_at.isoformat(),
             "updated_at": self.updated_at.isoformat(),
         }

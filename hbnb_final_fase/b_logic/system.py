@@ -77,10 +77,14 @@ class System:
             )
         except Exception:
             return jsonify({"Message":"Failed to create User."}), 400
-        existing_users = D_manager.get_all(new_user)
+        existing_users = D_manager.get_all(new_user.__class__)
         for user in existing_users:
-            if user.get('email') == data_user.get('email'):
-                raise ValueError("Email already exist!")
+            if isinstance(user, dict):
+                if user.get('email') == data_user.get('email'):
+                    raise ValueError("Email already exist!")
+            else:
+                if user.email == data_user.get('email'):
+                    raise ValueError("Email already exist!")
         D_manager.save(new_user)
         return new_user.to_dict()
 
