@@ -15,7 +15,8 @@ def create_place():
     for amenity_id in data.get('amenity_ids', []):
         amenity_found = False
         for amenity in amenities:
-            if isinstance(amenity, dict):
+            if not isinstance(amenity, dict):
+                amenity = amenity.to_dict()
                 if amenity.get("id") == amenity_id:
                     amenity_found = True
                     break
