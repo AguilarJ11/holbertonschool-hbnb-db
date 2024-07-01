@@ -3,6 +3,7 @@
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.city import City
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 
 country_bp = Blueprint('country', __name__)
 
@@ -45,7 +46,11 @@ def get_country_cities(country_code):
         return jsonify({"Message":"Citys not found."}), 404
 
 @country_bp.route('/cities', methods=['POST'])
+@jwt_required()
 def create_city():
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
     data = request.get_json()
     if not data.get("name"):
         raise ValueError("Name not valid!")
@@ -91,7 +96,12 @@ def update_city(city_id):
         return jsonify({"Message": "City not found"}), 404
 
 @country_bp.route('/cities/<city_id>', methods=['DELETE'])
+@jwt_required()
 def delete_city(city_id):
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+    
     if not city_id:
         raise ValueError("Id not valid!")
     try:

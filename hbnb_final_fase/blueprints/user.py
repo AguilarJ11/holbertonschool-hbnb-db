@@ -3,12 +3,18 @@
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.users import Users
-
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 user_bp = Blueprint('user', __name__)
 
 
 @user_bp.route('/users', methods=['POST'])
+@jwt_required()
 def create_user():
+
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+    
     data = request.get_json()
     if "@" not in data.get('email') or ".com" not in data.get('email'):
         raise ValueError("Email, not valid!")
@@ -49,7 +55,13 @@ def update_user(user_id):
         return jsonify({"Message": "User not found"}), 404
 
 @user_bp.route('/users/<user_id>', methods=['DELETE'])
+@jwt_required()
 def delete_user(user_id):
+
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+    
     try:
         user = System.get(user_id, Users)
         if user == None:

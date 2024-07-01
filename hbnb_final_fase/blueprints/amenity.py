@@ -3,12 +3,17 @@
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.amenities import Amenities
-
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 amenity_bp = Blueprint('amenity', __name__)
 
 
 @amenity_bp.route('/amenities', methods=['POST'])
+@jwt_required()
 def create_amenity():
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+    
     data = request.get_json()
     try:
         amenity = System.create_amenities(data)
@@ -42,7 +47,11 @@ def update_amenity(amenity_id):
         return jsonify({"Message": "User not found"}), 404
     
 @amenity_bp.route('/amenities/<amenity_id>', methods=['DELETE'])
+@jwt_required()
 def delete_amenity(amenity_id):
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
     try:
         amenity = System.get(amenity_id, Amenities)
         if amenity == None:

@@ -5,12 +5,14 @@ from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.p_layer.dataManager import DataManager
 from hbnb_final_fase.models.reviews import Reviews
-
 review_bp = Blueprint('review', __name__)
 D_manager = DataManager()
 
+
 @review_bp.route('/places/<place_id>/reviews', methods=['POST'])
+
 def create_place_review(place_id):
+
     data = request.get_json()
     if data.get('rating') <= 0 or data.get('rating') > 5:
         raise ValueError("Rating must be a number from 1 to 5")
