@@ -1,8 +1,9 @@
 #!/usr/bin/python3
-
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from dotenv import load_dotenv
 db = SQLAlchemy()
 
 
@@ -42,11 +43,5 @@ def register_routes(app):
     app.register_blueprint(login_bp)
 
 def db_config(app):
-    
-    """
-    inicializa la coneccion con sqlite
-    """
-
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///development.db'
 
     db.init_app(app)

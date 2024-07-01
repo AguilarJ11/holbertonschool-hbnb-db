@@ -5,22 +5,10 @@ from sqlalchemy import create_engine
 from hbnb_final_fase import db
 from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
-
+from __init__ import engine
 class Db_manager(IPersistenceManager):
     def __init__(self):
         
-        """
-        Crea el engine para conectarse a una db especifica
-        """
-        engine = create_engine(
-        'sqlite:///development.db',
-        pool_pre_ping=True)
-        
-        """
-        Crea todas las tablas de los modelo que fueron creados
-        a partir del objeto db.
-        Crea una session para hacer las consultas
-        """
         db.metadata.create_all(engine)
 
     def save(self, entity):
