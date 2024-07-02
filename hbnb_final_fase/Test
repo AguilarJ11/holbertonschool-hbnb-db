@@ -3,10 +3,10 @@ POST USER ✅
 curl -X POST http://localhost:5000/users \
 -H "Content-Type: application/json" \
 -d '{
-  "email": "NasdA@example.com",
-  "password": "21321",
-  "first_name": "Ignacio",
-  "last_name": "Necasek"
+  "email": "marto@example.com",
+  "password": "segura",
+  "first_name": "lol",
+  "last_name": "xd"
 }'
 
 curl -X POST http://localhost:5000/users \
@@ -29,12 +29,13 @@ curl -X GET http://localhost:5000/users/acc89b5a-daa4-443d-ab73-faee1a21b36d
 
 ACTUALIZAR USER POR ID ✅
 -------------
-curl -X PUT http://localhost:5000/users/2cfa4fbd-0a82-427b-93d3-8cb1ea67a197 \
+curl -X PUT http://localhost:5000/users/7ab80a56-1740-4260-80b5-198c32495273 \
 -H "Content-Type: application/json" \
 -d '{
   "email": "Nekosouwu@example.com",
   "password": "SAPE",
   "first_name": "Nekalol",
+  "is_admin": "True",
   "last_name": "Diamond"
 }'
 
@@ -184,3 +185,10 @@ curl -X PUT http://localhost:4000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd
 DELETE AMENITY ✅
 --------------
 curl -X DELETE http://localhost:4000/amenities/acc39ebd-cca8-4753-9ede-dd1e79508ccd
+
+
+curl -X DELETE \
+     curl -X DELETE \
+     http://localhost:5000/users/7ab80a56-1740-4260-80b5-198c32495273 \
+     -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcxOTk0MjM4OCwianRpIjoiOTFlZWMzMzAtZjkyZS00YTc5LThjZDItMmY0MTdjMmE2ODBjIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6Im1hcnRvQGV4YW1wbGUuY29tIiwibmJmIjoxNzE5OTQyMzg4LCJjc3JmIjoiZWUwZTRkMjUtODczMi00MGVjLTg4Y2QtYjE0OWFlYzVkZDI4IiwiZXhwIjoxNzE5OTQzMjg4LCJpc19hZG1pbiI6dHJ1ZX0.3CQFi2ioHNdHyCX46dTAGvE1HsMzV_tu8rFPqStFjvY" \
+     -H "Content-Type: application/json"
