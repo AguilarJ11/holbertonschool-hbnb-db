@@ -4,11 +4,17 @@ from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.amenities import Amenities
 from hbnb_final_fase.models.place import Place
-
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 place_bp = Blueprint('place', __name__)
 
 @place_bp.route('/places', methods=['POST'])
+@jwt_required()
 def create_place():
+
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+    
     data = request.get_json()
     amenities = System.get_all(Amenities)
     
@@ -60,7 +66,13 @@ def get_place(place_id):
         return jsonify({"Message":"Place not found."}), 404
 
 @place_bp.route('/places/<place_id>', methods=['PUT'])
+@jwt_required()
 def update_place(place_id):
+
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+
     data = request.get_json()
     try:
         u_place = System.update(place_id, data, Place)
@@ -69,7 +81,13 @@ def update_place(place_id):
         return jsonify({"Message": "Place not found"}), 404
 
 @place_bp.route('/places/<place_id>', methods=['DELETE'])
+@jwt_required()
 def delete_place(place_id):
+    
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
+    
     try:
         place = System.get(place_id, Place)
         if place == None:
