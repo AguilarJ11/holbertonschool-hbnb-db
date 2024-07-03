@@ -4,8 +4,6 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
-from hbnb_final_fase.p_layer.dataManager import DataManager
-from hbnb_final_fase.p_layer.db_manager import Db_manager
 from sqlalchemy import create_engine
 
 
