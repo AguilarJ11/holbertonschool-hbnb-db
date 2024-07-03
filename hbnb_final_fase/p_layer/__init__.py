@@ -4,22 +4,15 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
-# Carga el entorno desde el archivo .env
 load_dotenv('app.env')
-# Lee el entorno si seleccionamos si va ser una presistencia d ebase de datos o de archivos
 persistence = os.getenv('PERSISTENCE')
+database_type = os.getenv('DATABASE_TYPE')
 database_url = os.getenv('DATABASE_URL')
-# Si la presistencia es db pero la DATABASE_URL no esta definida entre sqllite y postgresql
-if persistence == 'db' and not database_url:
-    raise ValueError("DATABASE_URL no está definida en el archivo .env")
-# Crear el motor de SQLAlchemy solo si la persistencia es 'db'
 
 if persistence == 'db':
-    
-    print("Data base persistence")
-    engine = create_engine(database_url, pool_pre_ping=True)
-        
+    print(f"{database_type} db persistence")
+    engine = create_engine(database_url, pool_pre_ping=True)  
     D_manager = Db_manager()
-else:
+elif persistence == 'file':
     print("File persistence")
     D_manager = DataManager()   

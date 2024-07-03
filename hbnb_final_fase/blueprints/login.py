@@ -1,6 +1,7 @@
+#!/usr/bin/python3
+
 from flask import Blueprint, request, jsonify
-from flask_jwt_extended import JWTManager, create_access_token
-from hbnb_final_fase import db, create_app
+from flask_jwt_extended import create_access_token
 from hbnb_final_fase.models.users import Users
 
 login_bp = Blueprint('login', __name__)
