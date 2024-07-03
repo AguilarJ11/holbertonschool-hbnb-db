@@ -24,7 +24,7 @@ curl -X GET http://localhost:5000/users
 
 GET ID USER ✅
 -------------
-curl -X GET http://localhost:5000/users/ec268b0b-83f4-4672-aa6a-3f611fa8f3fd
+curl -X GET http://localhost:5000/users/acc89b5a-daa4-443d-ab73-faee1a21b36d
 
 
 ACTUALIZAR USER POR ID ✅

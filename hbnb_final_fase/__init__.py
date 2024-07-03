@@ -52,4 +52,3 @@ def db_config(app):
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
     db.init_app(app)
-
