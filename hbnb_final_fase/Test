@@ -29,7 +29,7 @@ curl -X GET http://localhost:5000/users/acc89b5a-daa4-443d-ab73-faee1a21b36d
 
 ACTUALIZAR USER POR ID ✅
 -------------
-curl -X PUT http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f \
+curl -X PUT http://localhost:5000/users/2cfa4fbd-0a82-427b-93d3-8cb1ea67a197 \
 -H "Content-Type: application/json" \
 -d '{
   "email": "Nekosouwu@example.com",
@@ -40,7 +40,7 @@ curl -X PUT http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f \
 
 DELETE USER POR ID ✅
 --------------
-curl -X DELETE http://localhost:4000/users/63a05307-c018-470d-80be-75c54c6f1f1f
+curl -X DELETE http://localhost:5000/users/3e39c818-6ae3-43a0-b417-57c8ceb792bb
 
 
 

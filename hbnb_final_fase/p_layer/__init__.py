@@ -13,7 +13,6 @@ env_name = os.getenv('ENV')
 
 if persistence == 'db':
     print(f"{database_type} db persistence")
-    engine = create_engine(database_url, pool_pre_ping=True)  
     D_manager = Db_manager()
 elif persistence == 'file':
     print("File persistence")

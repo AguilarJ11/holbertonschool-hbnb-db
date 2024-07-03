@@ -24,14 +24,16 @@ class Db_manager(IPersistenceManager):
         return data_list
     
     def delete(self, entity_id, entity):
-        data = db.session.query(entity).filter(entity.id==entity_id)
+        data = db.session.get(entity, entity_id)
         db.session.delete(data)
         db.session.commit()
 
     def update(self, entity_id, entity, entity_type):
-        data = db.session.get(entity_type, entity_id)
-        data.update(entity)
-        return data.to_dict()
+        entity['updated_at'] = datetime.now()
+        db.session.query(entity_type).filter(entity_type.id == entity_id).update(entity)
+        db.session.commit()
+        updated = db.session.get(entity_type, entity_id)
+        return updated.to_dict()
 
     def get_all_country(self):
         pass

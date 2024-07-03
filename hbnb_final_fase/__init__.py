@@ -8,7 +8,7 @@ from sqlalchemy import create_engine
 
 
 db = SQLAlchemy()
-
+jwt = JWTManager()
 
 def create_app():
     
@@ -23,7 +23,7 @@ def create_app():
     app.config['JWT_SECRET_KEY'] = 'super-secret-holberton'  # key
     register_routes(app)
     db_config(app)
-    jwt = JWTManager(app)
+    jwt.init_app(app)
     return app
 
 
