@@ -48,6 +48,10 @@ def register_routes(app):
     app.register_blueprint(login_bp)
 
 def db_config(app):
+    
+    from hbnb_final_fase.p_layer import database_url
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 
     db.init_app(app)
 

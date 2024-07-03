@@ -4,12 +4,9 @@ from sqlalchemy import create_engine
 from hbnb_final_fase import db
 from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
-from __init__ import engine
-class Db_manager(IPersistenceManager):
-    def __init__(self):
-        
-        db.metadata.create_all(engine)
 
+class Db_manager(IPersistenceManager):
+    
     def save(self, entity):
         data = db.session.add(entity)
         db.session.commit()
