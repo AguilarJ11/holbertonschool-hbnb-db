@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
 # Carga el entorno desde el archivo .env
-load_dotenv()
+load_dotenv('app.env')
 # Lee el entorno si seleccionamos si va ser una presistencia d ebase de datos o de archivos
 persistence = os.getenv('PERSISTENCE')
 database_url = os.getenv('DATABASE_URL')
