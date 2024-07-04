@@ -53,7 +53,7 @@ CREATE TABLE "amenities" (
   "updated_at" datetime NOT NULL
 );
 
-ALTER TABLE "users" ADD FOREIGN KEY ("id") REFERENCES "places" ("host_id");
+ALTER TABLE "places" ADD FOREIGN KEY ("host_id") REFERENCES "users" ("id");
 
 ALTER TABLE "places" ADD FOREIGN KEY ("city_id") REFERENCES "cities" ("id");
 
