@@ -6,7 +6,7 @@ from hbnb_final_fase.models.users import Users
 from hbnb_final_fase.models.place import Place
 from hbnb_final_fase.models.amenities import Amenities
 from hbnb_final_fase.models.city import City
-from hbnb_final_fase.p_layer import D_manager
+from config import D_manager
 
 
 class System:

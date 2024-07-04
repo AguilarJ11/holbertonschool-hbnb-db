@@ -1,16 +1,15 @@
 #!/usr/bin/python3
-import os
+
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
-from dotenv import load_dotenv
-from sqlalchemy import create_engine
-
 
 db = SQLAlchemy()
 jwt = JWTManager()
 
 def create_app():
+    
+    from config import env_name, config_by_name
     
     """
     Crea la app de flask, registra rutas y
@@ -18,7 +17,7 @@ def create_app():
     """
     app = Flask(__name__)
     
-    #app.config.from_object(config_by_name[env_name])
+    app.config.from_object(config_by_name[env_name])
     
     app.config['JWT_SECRET_KEY'] = 'super-secret-holberton'  # key
     register_routes(app)
@@ -48,7 +47,7 @@ def register_routes(app):
 
 def db_config(app):
     
-    from hbnb_final_fase.p_layer import database_url
+    from config import database_url
     
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 

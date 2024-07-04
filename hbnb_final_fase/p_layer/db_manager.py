@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from sqlalchemy import create_engine
 from hbnb_final_fase import db
 from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
