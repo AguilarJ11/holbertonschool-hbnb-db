@@ -6,6 +6,7 @@ from hbnb_final_fase.models.users import Users
 from hbnb_final_fase.models.place import Place
 from hbnb_final_fase.models.amenities import Amenities
 from hbnb_final_fase.models.city import City
+from hbnb_final_fase.models.amenities_places import Amenities_places
 from config import D_manager, persistence
 
 
@@ -55,8 +56,14 @@ class System:
             return jsonify({"Message":"Failed to create Place."}), 400
         
         if persistence != 'db':
-            new_place.amenity_ids = data_place.get('amenities:ids')
-
+            new_place.amenity_ids = data_place.get('amenities_ids')
+        else:
+            for amen in data_place.get('amenities_ids', []):
+                amenities_places = Amenities_places (
+                    place_id = new_place.id,
+                    amenities_id = amen
+                )
+                D_manager.save(amenities_places)
         D_manager.save(new_place)
         return new_place.to_dict()
 

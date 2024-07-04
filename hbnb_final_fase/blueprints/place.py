@@ -4,9 +4,7 @@ from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.amenities import Amenities
 from hbnb_final_fase.models.place import Place
-from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
-from config import persistence
-
+from flask_jwt_extended import jwt_required, get_jwt
 place_bp = Blueprint('place', __name__)
 
 @place_bp.route('/places', methods=['POST'])
@@ -20,20 +18,16 @@ def create_place():
     data = request.get_json()
     amenities = System.get_all(Amenities)
     
-    if persistence != 'db':
-        for amenity_id in data.get('amenity_ids', []):
-            amenity_found = False
-            for amenity in amenities:
-                if not isinstance(amenity, dict):
-                    amenity = amenity.to_dict()
-                    if amenity.get("id") == amenity_id:
-                        amenity_found = True
-                        break
-            if not amenity_found:
-                raise ValueError("Amenity not found!")
-    else:
-        amenities = System.get_all(Amenities)
-        
+    for amenity_id in data.get('amenity_ids', []):
+        amenity_found = False
+        for amenity in amenities:
+            if not isinstance(amenity, dict):
+                amenity = amenity.to_dict()
+            if amenity.get("id") == amenity_id:
+                amenity_found = True
+                break
+        if not amenity_found:
+            raise ValueError("Amenity not found!")
     if data.get('description') == "":
         raise TypeError("The place must have a description!")
     if not data.get('rooms') or data.get('rooms') <= 0:
