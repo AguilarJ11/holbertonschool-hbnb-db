@@ -18,7 +18,6 @@ class Place(Basic_data, db.Model):
     latitude = db.Column(db.Integer, nullable=False)
     longitude = db.Column(db.Integer, nullable=False)
     city_id = db.Column(db.String(40), db.ForeignKey('cities.id'), nullable=False)
-    amenity_id = db.Column(db.String(40), db.ForeignKey('amenities.id'), nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, onupdate=db.func.current_timestamp())
 

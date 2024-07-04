@@ -8,12 +8,12 @@ user_bp = Blueprint('user', __name__)
 
 
 @user_bp.route('/users', methods=['POST'])
-#@jwt_required()
+@jwt_required()
 def create_user():
 
-    #claims = get_jwt()
-    #if not claims.get('is_admin'):
-        #return jsonify({"msg": "Administration rights required"}), 403
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
     
     data = request.get_json()
     if "@" not in data.get('email') or ".com" not in data.get('email'):
@@ -50,16 +50,16 @@ def update_user(user_id):
     try:
         updated = System.update(user_id, data, Users)
         return jsonify(updated), 200
-    except:
-        return jsonify({"Message": "User not found"}), 404
+    except Exception as e:
+        return jsonify({"Message": "User not found", "error": str(e)}), 404
 
 @user_bp.route('/users/<user_id>', methods=['DELETE'])
-#@jwt_required()
+@jwt_required()
 def delete_user(user_id):
 
-    #claims = get_jwt()
-    #if not claims.get('is_admin'):
-        #return jsonify({"msg": "Administration rights required"}), 403
+    claims = get_jwt()
+    if not claims.get('is_admin'):
+        return jsonify({"msg": "Administration rights required"}), 403
     
     try:
         user = System.get(user_id, Users)

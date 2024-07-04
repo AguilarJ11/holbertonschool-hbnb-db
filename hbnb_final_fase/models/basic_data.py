@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
-from abc import ABC
 import uuid
 from datetime import datetime
-from hbnb_final_fase import db
 
 
 class Basic_data:

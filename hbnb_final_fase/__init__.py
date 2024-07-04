@@ -17,11 +17,10 @@ def create_app():
     """
     app = Flask(__name__)
     
-    app.config.from_object(config_by_name[env_name])
-    
     app.config['JWT_SECRET_KEY'] = 'super-secret-holberton'  # key
     register_routes(app)
     db_config(app)
+    app.config.from_object(config_by_name[env_name])
     jwt.init_app(app)
     return app
 

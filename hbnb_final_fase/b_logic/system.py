@@ -6,7 +6,7 @@ from hbnb_final_fase.models.users import Users
 from hbnb_final_fase.models.place import Place
 from hbnb_final_fase.models.amenities import Amenities
 from hbnb_final_fase.models.city import City
-from config import D_manager
+from config import D_manager, persistence
 
 
 class System:
@@ -49,12 +49,14 @@ class System:
                 price_per_night = float(data_place.get('price_per_night')),
                 latitude = float(data_place.get('latitude')),
                 longitude = float(data_place.get('longitude')),
-                city_id = data_place.get('city_id'),
-                amenity_ids = data_place.get('amenities_ids')
+                city_id = data_place.get('city_id')
                 )
         except Exception:
             return jsonify({"Message":"Failed to create Place."}), 400
         
+        if persistence != 'db':
+            new_place.amenity_ids = data_place.get('amenities:ids')
+
         D_manager.save(new_place)
         return new_place.to_dict()
 

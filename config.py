@@ -21,7 +21,7 @@ elif persistence == 'file':
     
     from hbnb_final_fase.p_layer.dataManager import DataManager
 
-    print("File persistence")
+    print(f"{persistence} persistence")
     D_manager = DataManager()   
 
 class Config(object):
