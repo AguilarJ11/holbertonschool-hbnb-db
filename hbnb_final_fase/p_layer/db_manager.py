@@ -4,6 +4,11 @@ from hbnb_final_fase import db
 from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
 
+"""
+Modulo de persistencia en una base de datos.
+"""
+
+
 class Db_manager(IPersistenceManager):
     
     def save(self, entity):

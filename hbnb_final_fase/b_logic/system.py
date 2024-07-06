@@ -1,5 +1,12 @@
 #!/usr/bin/python3
 
+"""
+Modulo utilizado para el alta, baja y control de
+entidades.
+"""
+
+
+
 from flask import jsonify
 from hbnb_final_fase.models.reviews import Reviews
 from hbnb_final_fase.models.users import Users
@@ -11,8 +18,28 @@ from config import D_manager, persistence
 
 
 class System:
+    
+    """
+    Clase que gestiona la creacion y modificacion de entidades.
+    """
 
     def create_review(place_id, data_review):
+        
+        """
+        Crea una nueva review para un lugar.
+
+        Parámetros:
+        place_id (str): ID del lugar.
+        data_review (dict): Datos de la review ('user_id', 'comment', 'rating').
+
+        Retorno:
+        dict o tuple: La review creada o un mensaje de error con el código de estado HTTP 400.
+
+        Excepciones:
+        Errors: Si el usuario hace una review de su propio lugar o ya hizo una review del lugar.
+        """
+        
+        
         try:
             new_review = Reviews(
                 user_id = data_review.get('user_id'),
@@ -38,7 +65,20 @@ class System:
 
         D_manager.save(new_review)
         return new_review.to_dict()
+    
     def create_place(data_place):
+        """
+        Crea un nuevo lugar.
+
+        Parámetros:
+        data_place (dict): Datos del lugar 
+            ('name', 'host_id', 'description', 'rooms', 
+            'bathrooms', 'max_guests', 'price_per_night', 'latitude', 
+            'longitude', 'city_id', 'amenities_ids').
+
+        Retorno:
+        dict o tuple: El lugar creado o un mensaje de error con el código de estado HTTP 400.
+        """
         try:
             new_place = Place(
                 name = data_place.get('name'),
@@ -55,6 +95,11 @@ class System:
         except Exception:
             return jsonify({"Message":"Failed to create Place."}), 400
         
+        """
+        Dependiendo el tipo de persistencia, como se guarda la info
+        de las amenities que tiene el place recientemente inicializado.
+        """
+        
         if persistence != 'db':
             new_place.amenity_ids = data_place.get('amenities_ids')
         else:
@@ -64,10 +109,22 @@ class System:
                     amenities_id = amen
                 )
                 D_manager.save(amenities_places)
+
         D_manager.save(new_place)
         return new_place.to_dict()
 
     def create_amenities(data_amenities):
+        
+        """
+        Crea una nueva 'amenity'.
+
+        Parámetros:
+        data_amenities (dict): Datos('name').
+
+        Retorno:
+        dict o tuple: La 'amenity' creada o un mensaje de error con el código de estado HTTP 400.
+        """
+
         try:
             new_amenity = Amenities(
                 name = data_amenities.get('name')
@@ -77,6 +134,20 @@ class System:
         D_manager.save(new_amenity)
 
     def create_user(data_user):
+        
+        """
+        Crea un nuevo usuario.
+
+        Parámetros:
+        data_user (dict): Datos del usuario ('email', 'password', 'first_name', 'last_name').
+
+        Retorno:
+        dict o tuple: El usuario creado o un mensaje de error con el código de estado HTTP 400.
+
+        Excepciones:
+        ValueError: Si el email ya existe.
+        """
+        
         try:
             new_user = Users(
                 email = data_user.get('email'),
@@ -86,6 +157,7 @@ class System:
             )
         except Exception:
             return jsonify({"Message":"Failed to create User."}), 400
+
         existing_users = D_manager.get_all(new_user.__class__)
         for user in existing_users:
             if isinstance(user, dict):
@@ -94,10 +166,25 @@ class System:
             else:
                 if user.email == data_user.get('email'):
                     raise ValueError("Email already exist!")
+
         D_manager.save(new_user)
         return new_user.to_dict()
 
     def create_city(data_city):
+        
+        """
+        Crea una nueva ciudad.
+
+        Parámetros:
+        data_city (dict): Datos de la ciudad ('name', 'country_code').
+
+        Retorno:
+        dict o tuple: La ciudad creada o un mensaje de error con el código de estado HTTP 400.
+
+        Excepciones:
+        ValueError: Si el código de país no existe.
+        """
+        
         try:
             new_city = City(
                 name = data_city.get('name'),
@@ -105,16 +192,28 @@ class System:
             )
         except Exception:
             return jsonify({"Message":"Failed to create City."}), 400
+
         countries = D_manager.get_all_country()
         for country in countries:
             country_found = False
-            if country.get("alpha-2") == new_city.county_code:
-                country_found = True
-                break
+            if persistence != 'db':
+                if country.get("alpha-2") == new_city.county_code:
+                    country_found = True
+                    break
+            else:
+                if country.code == new_city.country_code:
+                    country_found = True
         if not country_found:
             raise ValueError("Country not exist!")
+
         D_manager.save(new_city)
         return new_city.to_dict()
+
+
+    """
+    Metodos que conectan capa de servicios con
+    capa de persistencia.
+    """
 
     def update(entity_id, entity, entity_type):
        return D_manager.update(entity_id, entity, entity_type)

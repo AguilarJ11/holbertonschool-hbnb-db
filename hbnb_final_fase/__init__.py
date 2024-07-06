@@ -13,7 +13,7 @@ def create_app():
     
     """
     Crea la app de flask, registra rutas y
-    configura para conectarse a la db
+    configura para conectarse al tipo de persistencia
     """
     app = Flask(__name__)
     

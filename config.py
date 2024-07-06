@@ -3,6 +3,11 @@
 import os
 from dotenv import load_dotenv
 
+"""
+Este modulo importa y configura el tipo de persistencia con la que vamos a trabajar
+previamente seteado en el .env
+"""
+
 
 load_dotenv('app.env')
 persistence = os.getenv('PERSISTENCE')
