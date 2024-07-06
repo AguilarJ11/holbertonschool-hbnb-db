@@ -3,7 +3,7 @@
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.users import Users
-from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+from flask_jwt_extended import jwt_required, get_jwt
 user_bp = Blueprint('user', __name__)
 
 
@@ -29,11 +29,9 @@ def create_user():
         return jsonify({"message":"Failed to create User.", "error": str(e)}), 400
 
 @user_bp.route('/users', methods=['GET'])
-@jwt_required
+
 def get_users():
-    claims = get_jwt()
-    if not claims.get('is_admin'):
-        return jsonify({"msg": "Administration rights required"}), 403
+
     try:
         users = System.get_all(Users)
         return jsonify(users), 200
@@ -41,11 +39,9 @@ def get_users():
         return jsonify({"Message":"User not found."}), 404
 
 @user_bp.route('/users/<user_id>', methods=['GET'])
-@jwt_required
+
 def get_user(user_id):
-    claims = get_jwt()
-    if not claims.get('is_admin'):
-        return jsonify({"msg": "Administration rights required"}), 403
+
     try:
         user = System.get(user_id, Users)
         return jsonify(user), 200
@@ -53,11 +49,9 @@ def get_user(user_id):
         return jsonify({"Message":"User not found."}), 404
 
 @user_bp.route('/users/<user_id>', methods=['PUT'])
-@jwt_required
+
 def update_user(user_id):
-    claims = get_jwt()
-    if not claims.get('is_admin'):
-        return jsonify({"msg": "Administration rights required"}), 403
+
     data = request.get_json()
     try:
         updated = System.update(user_id, data, Users)
