@@ -4,6 +4,7 @@ from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.amenities import Amenities
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
+
 amenity_bp = Blueprint('amenity', __name__)
 
 

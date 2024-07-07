@@ -2,6 +2,7 @@
 
 from hbnb_final_fase import db
 from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
+from hbnb_final_fase.models.country import Country
 from datetime import datetime
 
 """
@@ -40,7 +41,12 @@ class Db_manager(IPersistenceManager):
         return updated.to_dict()
 
     def get_all_country(self):
-        pass
+        data = db.session.query(Country).all()
+        data_list = []
+        for entity in data:
+            data_list.append(entity.to_dict())
+        return data_list
     
     def get_country(self, entity_id):
-        pass
+        data = db.session.get(Country, entity_id)
+        return data.to_dict()

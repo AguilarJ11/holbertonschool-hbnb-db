@@ -1,12 +1,10 @@
 #!/usr/bin/python3                                                                                                                                                                                                                                                           
 
-
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
-from hbnb_final_fase.p_layer.dataManager import DataManager
 from hbnb_final_fase.models.reviews import Reviews
+
 review_bp = Blueprint('review', __name__)
-D_manager = DataManager()
 
 
 @review_bp.route('/places/<place_id>/reviews', methods=['POST'])

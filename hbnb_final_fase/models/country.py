@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 from hbnb_final_fase import db
 
 

@@ -5,6 +5,7 @@ from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.amenities import Amenities
 from hbnb_final_fase.models.place import Place
 from flask_jwt_extended import jwt_required, get_jwt
+
 place_bp = Blueprint('place', __name__)
 
 @place_bp.route('/places', methods=['POST'])

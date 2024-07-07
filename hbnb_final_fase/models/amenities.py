@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-import uuid
 from hbnb_final_fase import db
 from hbnb_final_fase.models.basic_data import Basic_data
 

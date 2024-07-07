@@ -5,6 +5,11 @@ from hbnb_final_fase.models.IPersistenceManager import IPersistenceManager
 from datetime import datetime
 import json
 
+"""
+Modulo de persistencia en archivo
+"""
+
+
 class DataManager(IPersistenceManager):
     def __init__(self):
         self.data_lists = {
