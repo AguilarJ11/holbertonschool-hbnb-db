@@ -7,10 +7,6 @@ curl -X POST http://localhost:5000/users \
   "password": "21321",
   "first_name": "asdasd",
   "last_name": "asdasd"
-  "email": "marto@example.com",
-  "password": "segura",
-  "first_name": "lol",
-  "last_name": "xd"
 }'
 
 curl -X POST http://localhost:5000/users \
@@ -36,7 +32,7 @@ ACTUALIZAR USER POR ID ✅
 curl -X PUT http://localhost:5000/users/7ab80a56-1740-4260-80b5-198c32495273 \
 -H "Content-Type: application/json" \
 -d '{
-<<<<<<< HEAD
+
   "email": "94949@example.com",
   "password": "SAP233E",
   "first_name": "ol",
@@ -47,7 +43,6 @@ curl -X PUT http://localhost:5000/users/7ab80a56-1740-4260-80b5-198c32495273 \
   "first_name": "Nekalol",
   "is_admin": "True",
   "last_name": "Diamond"
->>>>>>> 96072b98fb5d9318d49051e52d1fd3b8306be869
 }'
 
 DELETE USER POR ID ✅

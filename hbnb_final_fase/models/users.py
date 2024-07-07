@@ -18,9 +18,10 @@ class Users(Basic_data, db.Model):
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     updated_at = db.Column(db.DateTime, onupdate=db.func.current_timestamp())
 
-    def __init__(self, email, first_name, last_name, password):
+    def __init__(self, email, first_name, last_name, password, is_admin):
         super().__init__()
         self.email = email
+        self.is_admin = is_admin
         self.set_password(password)
         self.first_name = first_name
         self.last_name = last_name

@@ -151,7 +151,7 @@ class System:
         try:
             new_user = Users(
                 email = data_user.get('email'),
-                password = data_user.get('password'),
+                password_hash = data_user.get('password'),
                 first_name = data_user.get('first_name'),
                 last_name = data_user.get('last_name')
             )

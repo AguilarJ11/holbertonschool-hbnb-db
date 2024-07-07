@@ -2,6 +2,7 @@
 
 import os
 from dotenv import load_dotenv
+import pycountry
 
 """
 Este modulo importa y configura el tipo de persistencia con la que vamos a trabajar
@@ -42,3 +43,40 @@ config_by_name = {
     'development': DevelopmentConfig,
     'production': ProductionConfig
 }
+
+
+"""
+Modulo utilizado solamente con persistencia en db
+
+Crea las tablas de la base de datos, crea un registro
+de paises para la tabla countries y crea un usuario admin
+"""
+
+def create_db(app, db):
+    
+   with app.app_context():
+    db.create_all()
+
+    from hbnb_final_fase.models.country import Country
+    from hbnb_final_fase.models.users import Users
+
+    try:
+        
+        admin = Users(
+            email = "admin@full_chad",
+            is_admin = 1,
+            password = "123",
+            first_name = "el_",
+            last_name = "admin",
+        )
+        D_manager.save(admin)
+        
+        for countrie in pycountry.countries:
+            new_country = Country (
+                name = countrie.name,
+                code = countrie.alpha_2,
+            )
+            D_manager.save(new_country)
+        
+    except Exception as e:
+        pass
