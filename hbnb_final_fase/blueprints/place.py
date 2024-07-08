@@ -1,5 +1,22 @@
 #!/usr/bin/python3
 
+"""
+Module place.py
+===============
+
+This module defines the Flask blueprint for place-related routes, including 
+creating, retrieving, updating, and deleting places. It uses JWT for authentication 
+and authorization.
+
+Routes:
+-------
+- POST /places: Creates a new place. Requires admin rights.
+- GET /places: Retrieves all places.
+- GET /places/<place_id>: Retrieves a specific place by place ID.
+- PUT /places/<place_id>: Updates a specific place by place ID. Requires admin rights.
+- DELETE /places/<place_id>: Deletes a specific place by place ID. Requires admin rights.
+"""
+
 from flask import Blueprint, request, jsonify
 from hbnb_final_fase.b_logic.system import System
 from hbnb_final_fase.models.amenities import Amenities
@@ -11,6 +28,19 @@ place_bp = Blueprint('place', __name__)
 @place_bp.route('/places', methods=['POST'])
 @jwt_required()
 def create_place():
+
+    """
+    Create a new place.
+
+    Request JSON data must include 'description', 'rooms', 'bathrooms', 'max_guests', 
+    'price_per_night', 'latitude', and 'longitude'. Amenity IDs must be valid.
+    Requires admin rights (is_admin claim in JWT).
+
+    Returns:
+        JSON response with the created place data and status 200 on success.
+        JSON response with error message and status 403 if not admin.
+        JSON response with error message and status 400 on failure.
+    """
 
     claims = get_jwt()
     if not claims.get('is_admin'):
@@ -52,6 +82,15 @@ def create_place():
 
 @place_bp.route('/places', methods=['GET'])
 def get_places():
+
+    """
+    Retrieve all places.
+
+    Returns:
+        JSON response with a list of all places and status 200 on success.
+        JSON response with error message and status 404 if no places are found.
+    """
+
     try:
         place = System.get_all(Place)
         return jsonify(place), 200
@@ -60,6 +99,18 @@ def get_places():
     
 @place_bp.route('/places/<place_id>', methods=['GET'])
 def get_place(place_id):
+
+    """
+    Retrieve a specific place by place ID.
+
+    Args:
+        place_id (UUID4): The ID of the place to retrieve.
+
+    Returns:
+        JSON response with the place data and status 200 on success.
+        JSON response with error message and status 404 if place is not found.
+    """
+
     try:
         place = System.get(place_id, Place)
         return jsonify(place), 200
@@ -69,6 +120,20 @@ def get_place(place_id):
 @place_bp.route('/places/<place_id>', methods=['PUT'])
 @jwt_required()
 def update_place(place_id):
+
+    """
+    Update a specific place by place ID.
+
+    Args:
+        place_id (UUID4): The ID of the place to update.
+        Request JSON data must include fields to be updated.
+    Requires admin rights (is_admin claim in JWT).
+
+    Returns:
+        JSON response with the updated place data and status 200 on success.
+        JSON response with error message and status 403 if not admin.
+        JSON response with error message and status 404 on failure.
+    """
 
     claims = get_jwt()
     if not claims.get('is_admin'):
@@ -85,6 +150,19 @@ def update_place(place_id):
 @jwt_required()
 def delete_place(place_id):
     
+    """
+    Delete a specific place by place ID.
+
+    Args:
+        place_id (UUID4): The ID of the place to delete.
+    Requires admin rights (is_admin claim in JWT).
+
+    Returns:
+        JSON response with status 204 on successful deletion.
+        JSON response with error message and status 403 if not admin.
+        JSON response with error message and status 404 if place is not found.
+    """
+
     claims = get_jwt()
     if not claims.get('is_admin'):
         return jsonify({"msg": "Administration rights required"}), 403
