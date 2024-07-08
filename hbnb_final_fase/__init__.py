@@ -19,8 +19,8 @@ def create_app():
     
     app.config['JWT_SECRET_KEY'] = 'super-secret-holberton'  # key
     register_routes(app)
-    db_config(app)
     app.config.from_object(config_by_name[env_name])
+    db.init_app(app)
     jwt.init_app(app)
     return app
 
@@ -44,10 +44,3 @@ def register_routes(app):
     app.register_blueprint(amenity_bp)
     app.register_blueprint(login_bp)
 
-def db_config(app):
-    
-    from config import database_url
-    
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-
-    db.init_app(app)

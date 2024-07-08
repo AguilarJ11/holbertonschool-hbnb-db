@@ -17,4 +17,4 @@ if persistence == 'db' and env_name == 'development':
     create_db(app, db)
 
 if __name__ == "__main__":
-    app.run(debug=app.config['DEBUG'])
+    app.run()
